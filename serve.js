@@ -19,6 +19,13 @@ const template = require('fs').readFileSync('./index.template.html', 'utf-8')
 const serverBundle = require('./dist/vue-ssr-server-bundle.json')
 const clientManifest = require('./dist/vue-ssr-client-manifest.json')
 
+const serve = (path, cache) => express.static(resolve(path), {
+  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
+})
+
+// server.use(favicon('./public/logo-48.png'))
+server.use('/dist', serve('./dist', true))
+
 server.get('*', (req, res) => {
   res.setHeader("Content-Type", "text/html")
   console.log(`------req.url----`, req.url)
@@ -68,13 +75,6 @@ server.get('*', (req, res) => {
   })
 
 })
-
-const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
-})
-
-// server.use(favicon('./public/logo-48.png'))
-server.use('/dist', serve('./dist', true))
 
 const port = process.env.PORT || 8080
 server.listen(port, () => {
