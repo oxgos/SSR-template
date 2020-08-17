@@ -1,0 +1,22 @@
+{
+  "name": "ssr-demo",
+  "version": "1.0.0",
+  "description": "vue ssr",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node serve.js"
+  },
+  "keywords": [
+    "ssr",
+    "seo",
+    "vue"
+  ],
+  "author": "Gavin_Guo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "vue": "^2.6.11",
+    "vue-server-renderer": "^2.6.11"
+  },
+  "devDependencies": {}
+}
