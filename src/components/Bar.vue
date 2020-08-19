@@ -18,5 +18,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .bar {}
+  .bar {
+    color: pink;
+  }
 </style>

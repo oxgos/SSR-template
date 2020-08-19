@@ -10,5 +10,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  .baz {}
+  .baz {
+    color: blue;
+  }
 </style>
