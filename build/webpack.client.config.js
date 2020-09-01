@@ -5,21 +5,6 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 module.exports = merge(baseConfig, {
   entry: './src/entry-client.js',
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  },
   plugins: [
     // strip dev-only code in Vue source
     new webpack.DefinePlugin({

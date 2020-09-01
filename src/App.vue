@@ -10,6 +10,6 @@
     padding: 0;
   }
   #app {
-
+    width: 100%;
   }
 </style>
