@@ -12,22 +12,22 @@ class ServerMiniCssExtractPlugin extends MiniCssExtractPlugin {
   }
 }
 
+const config = require('./config')[process.env.NODE_ENV || 'development']
 const isProd = process.env.NODE_ENV === 'production'
 
 let baseConfig = {
-  mode: isProd
-    ? 'production'
-    : 'development',
-  devtool: isProd
-    ? false
-    : '#cheap-module-source-map',
+  mode: config.mode,
+  devtool: config.devtool,
   output: {
-    path: path.resolve(__dirname, '../dist/'),
-    filename: '[name].[chunkhash].js',
-    publicPath: '/dist/' // 相对于服务(server-relative)
+    path: config.path,
+    filename: config.filename,
+    chunkFilename: config.chunkFilename,
+    publicPath: config.publicPath,
   },
   resolve: {
+    extensions: ['.js', '.vue'],
     alias: {
+      '@': path.resolve(__dirname, '../src'),
       'public': path.resolve(__dirname, '../public')
     }
   },
@@ -40,6 +40,10 @@ let baseConfig = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: {
+          // enable CSS extraction
+          extractCSS: isProd
+        }
       },
       {
         test: /\.js$/,
@@ -52,7 +56,13 @@ let baseConfig = {
         }
       },
       {
-        test: /\.(css|less)$/,
+        test: /\.css$/,
+        use: isProd
+          ? [ServerMiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+          : ['vue-style-loader', 'css-loader', 'postcss-loader']
+      },
+      {
+        test: /\.less$/,
         use: isProd
           ? [ServerMiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
           : ['vue-style-loader', 'css-loader', 'postcss-loader', 'less-loader']

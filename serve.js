@@ -107,6 +107,7 @@ function render (req, res) {
   }
 
   renderer.renderToString(context, (err, html) => {
+    console.log('-------------', context.renderStyles())
     if (err) {
       return handleError(err)
     }
